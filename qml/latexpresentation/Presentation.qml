@@ -51,10 +51,6 @@ Item {
 
     property bool fullScreen: true
 
-    Text {
-        text: root.currentSlide + " / " + root.slides.length
-    }
-
     onFullScreenChanged: {
         if(fullScreen) {
             showFullScreen()
@@ -91,6 +87,32 @@ Item {
         from.visible = false
         to.visible = true
         return true
+    }
+
+    function goToFirstSlide() {
+        root.userNum = 0
+        if (faded) {
+            return
+        }
+        var from = slides[currentSlide]
+        var to = slides[0]
+        if (switchSlides(from, to, false)) {
+            currentSlide = 0;
+            root.focus = true;
+        }
+    }
+
+    function goToLastSlide() {
+        root.userNum = 0
+        if (faded) {
+            return
+        }
+        var from = slides[currentSlide]
+        var to = slides[root.slides.length - 1]
+        if (switchSlides(from, to, true)) {
+            currentSlide = root.slides.length - 1;
+            root.focus = true;
+        }
     }
 
     function goToNextSlide() {
@@ -149,13 +171,17 @@ Item {
         if (event.key >= Qt.Key_0 && event.key <= Qt.Key_9)
             userNum = 10 * userNum + (event.key - Qt.Key_0)
         else {
-            if (event.key == Qt.Key_Return || event.key == Qt.Key_Enter)
+            if (event.key == Qt.Key_Return || event.key == Qt.Key_Enter) {
                 goToUserSlide();
-            else if (event.key == Qt.Key_Backspace)
+            } else if (event.key == Qt.Key_Backspace) {
                 goToPreviousSlide();
-            else if (event.key == Qt.Key_C)
+            } else if (event.key == Qt.Key_End) {
+                goToLastSlide();
+            } else if (event.key == Qt.Key_Home) {
+                goToFirstSlide();
+            } else if (event.key == Qt.Key_C) {
                 root.faded = !root.faded;
-            else if (event.key == Qt.Key_F5 || event.key == Qt.Key_F11) {
+            } else if (event.key == Qt.Key_F5 || event.key == Qt.Key_F11) {
                 fullScreen = !fullScreen
             }
             userNum = 0;

@@ -1,11 +1,14 @@
 //import Qt.labs.presentation 1.0
 import QtQuick 2.2
 import LatexPresentation 1.0
-//import QtMultimediaKit 1.1
+import QtQuick.Controls 1.1
+import QtMultimedia 5.0
+import QtGraphicalEffects 1.0
 
 TransitionPresentation
 {
-    id: myPresentation
+    id: presentation
+
     focus: true
 
     transitionTime: 500
@@ -15,105 +18,237 @@ TransitionPresentation
 
     textColor: "black"
 
-    Slide {
-        title: "One-body density"
-    }
-
-    Slide {
-        Latex {
-            text: "Genetic Monte Carlo"
-            color: "black"
-            anchors.top: parent.top
-            anchors.topMargin: parent.height / 3
-            anchors.horizontalCenter: parent.horizontalCenter
-            centered: true
-            width: parent.width / 2
+    LinearGradient {
+        anchors.fill: parent
+        gradient: Gradient {
+            GradientStop { position: 0.0; color: "#f7fcfd" }
+            GradientStop { position: 1.0; color: "#f7fcfd" }
         }
     }
 
-    Slide {
-        title: "One-body density"
-        Image {
-            id: box
+    UpperLeftSlide {
+        Heading {
+            text: "Bridging Quantum Mechanics\nand Molecular Dynamics\nwith Artificial Neural Networks"
+        }
+    }
+
+    // Introduction
+
+    UpperLeftSlide {
+        title: "Atomic Interactions"
+        centeredText: "Multiple scales, quantum and microscopic,\n" +
+                      "bridged with neural networks"
+    }
+
+    UpperLeftSlide {
+        title: "Details from Quantum Mechanics"
+        centeredText: "Forces and chemistry"
+    }
+
+    UpperLeftSlide {
+        title: "Macroscopic Properties of Molecular Dynamics"
+        centeredText: "Pressure, temperature, etc."
+    }
+
+    UpperLeftSlide {
+        title: "Problems"
+        centeredText: "Expensive details and many atoms"
+    }
+
+    UpperLeftSlide {
+        title: "Goal"
+        centeredText: "Build a bridge between the two scales\nwith artificial neural networks"
+    }
+
+    // Molecular dynamics
+
+    UpperLeftSlide {
+        Heading {
+            text: "Molecular Dynamics"
+        }
+    }
+
+    UpperLeftSlide {
+        title: "Molecular Dynamics"
+        centeredText: "Newtonian mechanics and classical potentials"
+    }
+
+    UpperLeftSlide {
+        title: "Classical Potentials"
+        Latex {
+            text: "$$V(\\mathbf{r}) " +
+                  " = \\sum_{k=1}^{N} V_{1}(\\mathbf{r}_{k})" +
+                  " + \\sum_{k<l}^{N} V(\\mathbf{r}_{k}, \\mathbf{r}_{l})" +
+                  " + \\sum_{k<l<m}^{N} V(\\mathbf{r}_{k}, \\mathbf{r}_{l}, \\mathbf{r}_{m})$$"
+        }
+    }
+
+    UpperLeftSlide {
+        title: "Two-body Terms"
+        Latex {
+            width: parent.width * 0.5
+            text: "$$ V_{2}(\\mathbf{r}_{i}, \\mathbf{r}_{j})" +
+                  " = V_{2}(r_{ij})$$"
+        }
+    }
+
+    UpperLeftSlide {
+        title: "Lennard-Jones"
+        Latex {
+            width: parent.width * 0.5
+            text: "$$V_{\\mathrm{LJ}}(r)" +
+                  " = 4\\epsilon \\left ( \\frac{\\sigma^{12}}{r^{12}} - \\frac{\\sigma^{6}}{r^{6}} \\right)$$"
+        }
+    }
+
+    UpperLeftSlide {
+        title: "Three-Body Terms"
+        Latex {
             width: parent.width * 0.7
-            height: width * sourceSize.height / sourceSize.width
-            source: "../../images/density-trim.png"
-            anchors.centerIn: parent
-            smooth: true
-
-            MouseArea {
-                id: mouse
-                anchors.fill: parent
-                drag.target: box
-                onPressed: {
-                    box.anchors.centerIn = undefined
-                }
-            }
+            text: "$$ V_{3}(\\mathbf{r}_{i}, \\mathbf{r}_{j}, \\mathbf{r}_{k})" +
+                  " = V_{3}(r_{ij}, r_{ik}, \\theta_{jik})$$"
         }
     }
 
-    Slide {
-        title: "We can even have tables"
-        Latex {
-            text: "Here comes a table!" +
-                  "\\begin{table}" +
-                  "\\begin{tabular}{ccc}" +
-                  "     a & b & c \\\\" +
-                  "     d & e & f \\\\" +
-                  "     g & h & i \\\\" +
-                  "\\end{tabular}" +
-                  "\\end{table}"
+    UpperLeftSlide {
+        title: "Measurements"
+        centeredText: "Statistical sampling of pressure and temperature"
+    }
 
-            anchors.centerIn: parent
-            centered: false
-            width: parent.width / 2
+    UpperLeftSlide {
+        title: "Modifications"
+        centeredText: "Thermostats, volume changes, friction, ..."
+    }
+
+    UpperLeftSlide {
+        title: "Does It Make Sense?"
+        centeredText: "Is the potential reasonable?"
+    }
+
+    UpperLeftSlide {
+        title: "Where Does It Come From?"
+        centeredText: "Experiments and/or quantum mechanics"
+    }
+
+    UpperLeftSlide {
+        title: "Results with Argon"
+        centeredText: "LJ is a good approximation"
+    }
+
+    // Computational Quantum Mechanics
+
+    UpperLeftSlide {
+        Heading {
+            text: "Computational\nQuantum Mechanics"
         }
     }
 
-    Slide {
-        Latex {
-            text: "The wave function $\\Psi$ is defined as $$\\Psi = \\Phi_0 \\Psi_J$$ where $\\Phi_0$ is the Slater determinant and $\\Psi_J$ the Jastrow factor"
-            anchors.centerIn: parent
-            centered: true
-            width: parent.width
+    UpperLeftSlide {
+        title: "Assumptions"
+        content: ["Born-Oppenheimer: classical nuclei",
+            "Slater determinant: only exchange correlations"]
+    }
+
+    UpperLeftSlide {
+        title: "Born-Oppenheimer"
+        content: ["Nuclei are treated classically",
+            "Assumes ground state",
+            "Coarse, but good approximation"]
+    }
+
+    UpperLeftSlide {
+        title: "Hartree-Fock Method"
+        centeredText: "Slater determinant, single-particle wave functions"
+    }
+
+    UpperLeftSlide {
+        title: "Hartree-Fock Method"
+        centeredText: "Mean field approximation"
+    }
+
+    UpperLeftSlide {
+        title: "Electron Density"
+        centeredText: "Screenshots! Live?"
+    }
+
+    UpperLeftSlide {
+        title: "Path to Molecular Dynamics"
+        centeredText: "Energy to potential energy"
+    }
+
+    // Neural networks
+
+    UpperLeftSlide {
+        Heading {
+            text: "Artificial\nNeural Networks"
         }
     }
 
-    Slide {
-        title: "Standard bullet list"
-        content: [
-            "Please don't use this",
-            "Bullets are so boring",
-            "So why are you still reading?"
-        ]
+    UpperLeftSlide {
+        title: "Training"
+        centeredText: "Trained to reproduce results"
     }
 
-// Example of QML Video element in Slide. You should uncomment the QGLWidget line in main.cpp
-// and add a video of your choice to use this
-//    Slide {
-//        title: "Bonus: Video!"
-//        Video {
-//            id: myVideo
-//            source: "../../videos/TerryMoore_2012.mp4"
-//            width : parent.width
-//            height : parent.height
-//            anchors.centerIn: parent
+    UpperLeftSlide {
+        title: "Neurons"
+        centeredText: "The neuron consists of"
+    }
 
-//            MouseArea {
-//                anchors.fill: parent
-//                onClicked: {
-//                    if(myVideo.paused) {
-//                        myVideo.play()
-//                    } else if(myVideo.playing) {
-//                        myVideo.pause()
-//                    } else {
-//                        myVideo.play()
-//                    }
-//                }
-//            }
+    UpperLeftSlide {
+        title: "Neural Network"
+        centeredText: "Connected neurons"
+    }
 
-//        }
-//    }
+    UpperLeftSlide {
+        title: "Neural Network"
+        centeredText: "Input/output"
+    }
 
+    UpperLeftSlide {
+        title: "Approximating potentials"
+        centeredText: "Show images!"
+    }
+
+    UpperLeftSlide {
+        title: "Results in Hydrogen Molecules"
+        centeredText: "Show images!"
+    }
+
+    UpperLeftSlide {
+        title: "Hydrogen Dissociation"
+        centeredText: "Show results!"
+    }
+
+    UpperLeftSlide {
+        title: "Future Possibilities"
+        centeredText: "Better quantum, better neural"
+    }
+
+    // Visualization
+
+    UpperLeftSlide {
+        Heading {
+            text: "Visualization"
+        }
+    }
+
+    UpperLeftSlide {
+        title: "Volume Rendering of Density"
+        centeredText: "Show images!"
+    }
+
+    UpperLeftSlide {
+        title: "Millions of Atoms"
+        centeredText: "Show images!"
+    }
+
+    UpperLeftSlide {
+        title: "Virtual Reality"
+        centeredText: "Show images!"
+    }
 
 }
+
+// TODO: Check thesis for more content!
+
+

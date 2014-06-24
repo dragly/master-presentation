@@ -9,10 +9,11 @@ Image {
     property bool centered: true
     property int dpi: 600
 
-//    height: width * sourceSize.height / sourceSize.width
+    anchors.centerIn: parent
+    width: parent.width * 0.9
+
+    height: width * sourceSize.height / sourceSize.width
     smooth: true
-    sourceSize.width: 1200
-    sourceSize.height: 1200
     fillMode: Image.PreserveAspectFit
 
     Component.onCompleted: {

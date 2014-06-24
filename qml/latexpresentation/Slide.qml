@@ -39,69 +39,73 @@ import QtQuick 2.2
 Item {
     id: slide
 
+    property alias contentFont: centeredId.font
+    property alias titleFont: titleText.font
+
     property bool isSlide: true;
 
     property string title;
     property variant content: []
     property string centeredText
 
-    property real fontSize: parent.height * 0.05
-    property real fontScale: 1
+    property real _fontSize: height * 0.06
+    property real _fontScale: 1
 
-    property real baseFontSize: fontSize * fontScale
-    property real titleFontSize: fontSize * fontScale
+    property real _baseFontSize: _fontSize * _fontScale
+    property real _titleFontSize: _fontSize * _fontScale * 1.1
     property real bulletSpacing: 1
 
     property real contentWidth: width
 
     // Define the slide to be the "content area"
     x: parent.width * 0.05
-    y: parent.height * 0.2
+    y: parent.height * 0.05
     width: parent.width * 0.9
-    height: parent.height * 0.7
+    height: parent.height * 0.90
 
-    property real masterWidth: parent.width
-    property real masterHeight: parent.height
-
-    property color slideTextColor: parent.textColor != undefined ? parent.textColor : "black"
-    property string slideFontFamily: parent.fontFamily != undefined ? parent.fontFamily : "EB Garamond"
+    property color slideTextColor: parent.textColor !== undefined ? parent.textColor : "black"
+    property string contentFontFamily: parent.fontFamily !== undefined ? parent.fontFamily : "Source Sans Pro"
+    property string titleFontFamily: parent.fontFamily !== undefined ? parent.fontFamily : "Utopia"
 
     visible: false
 
     Text {
         id: titleText
-        font.pixelSize: titleFontSize
         text: title;
         anchors.horizontalCenter: parent.horizontalCenter
-        anchors.bottom: parent.top
-        anchors.bottomMargin: parent.fontSize * 1.5
-        font.family: slideFontFamily
+        anchors.top: parent.top
+        anchors.topMargin: parent._fontSize * 1.0
+        font.family: titleFontFamily
+        font.weight: Font.Light
+        font.pixelSize: _titleFontSize
         color: slideTextColor
         horizontalAlignment: Text.Center
-//        font.pixelSize: baseFontSize
-//        textFormat: Text.PlainText
-//        wrapMode: Text.WordWrap
-//        font.family: slideFontFamily
-//        color: slide.slideTextColor
-//        horizontalAlignment: Text.AlignLeft
     }
 
     Text {
         id: centeredId
         width: parent.width
         anchors.centerIn: parent
-        anchors.verticalCenterOffset: - parent.y / 3
+//        anchors.verticalCenterOffset: parent.y / 3
         text: centeredText
         horizontalAlignment: Text.Center
-        font.pixelSize: baseFontSize
-        font.family: slideFontFamily
+        font.pixelSize: _baseFontSize
+        font.family: contentFontFamily
+        font.weight: Font.Light
         color: slideTextColor
         wrapMode: Text.Wrap
     }
 
     Column {
         id: contentId
-        anchors.fill: parent
+//        anchors {
+//            left: parent.left
+//            right: parent.right
+//            bottom: parent.bottom
+//            top: titleText.bottom
+//            topMargin: parent._fontSize * 1.0
+//        }
+        anchors.centerIn: parent
 
         Repeater {
             model: content.length
@@ -114,14 +118,14 @@ Item {
                 property int nextIndentLevel: index < content.length - 1 ? decideIndentLevel(content[index+1]) : 0
                 property real indentFactor: (10 - row.indentLevel * 2) / 10;
 
-                height: text.height + (nextIndentLevel == 0 ? 1 : 0.3) * slide.baseFontSize * slide.bulletSpacing
-                x: slide.baseFontSize * indentLevel
+                height: text.height + (nextIndentLevel == 0 ? 1 : 0.3) * slide._baseFontSize * slide.bulletSpacing
+                x: slide._baseFontSize * indentLevel
 
                 Rectangle {
                     id: dot
-                    y: baseFontSize * row.indentFactor / 2
-                    width: baseFontSize / 4
-                    height: baseFontSize / 4
+                    y: _baseFontSize * row.indentFactor / 2
+                    width: _baseFontSize / 4
+                    height: _baseFontSize / 4
                     color: slide.slideTextColor
                     radius: width / 2
                     smooth: true
@@ -138,11 +142,12 @@ Item {
                 Text {
                     id: text
                     width: slide.contentWidth - parent.x - dot.width - space.width
-                    font.pixelSize: baseFontSize * row.indentFactor
+                    font.pixelSize: _baseFontSize * row.indentFactor
                     text: content[index]
                     textFormat: Text.PlainText
                     wrapMode: Text.WordWrap
-                    font.family: slideFontFamily
+                    font.family: contentFontFamily
+                    font.weight: Font.Light
                     color: slide.slideTextColor
                     horizontalAlignment: Text.AlignLeft
                 }

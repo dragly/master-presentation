@@ -46,13 +46,9 @@ Presentation {
     focus: true
 
     property color textColor: "white"
-
     property bool inTransition: false;
-
     property Slide fromSlide
-
     property Slide toSlide
-
     property int transitionTime: 500;
 
     SequentialAnimation {
@@ -99,10 +95,11 @@ Presentation {
         deck.fromSlide = from
         deck.toSlide = to
 
-        if (forward)
+        if (forward) {
             forwardTransition.running = true
-        else
+        } else {
             backwardTransition.running = true
+        }
 
         return true
     }

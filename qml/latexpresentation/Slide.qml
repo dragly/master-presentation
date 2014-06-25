@@ -42,20 +42,78 @@ Item {
     property alias contentFont: centeredId.font
     property alias titleFont: titleText.font
 
-    property bool isSlide: true;
+    property bool isSlide: true
+    property bool delayPoints: delayedContent.length > 0 ? true : false
 
     property string title;
-    property variant content: []
+    property list<Item> delayedContent
+    property variant bullets: []
     property string centeredText
 
-    property real _fontSize: height * 0.06
+    property real _fontSize: height * 0.09
     property real _fontScale: 1
 
     property real _baseFontSize: _fontSize * _fontScale
-    property real _titleFontSize: _fontSize * _fontScale * 1.1
+    property real _titleFontSize: _fontSize * _fontScale * 1.03
+    property int _pointCounter: 0
     property real bulletSpacing: 1
 
     property real contentWidth: width
+    property string writeInText
+    property string notes
+
+    property color slideTextColor: parent.textColor !== undefined ? parent.textColor : "black"
+    property string contentFontFamily: parent.fontFamily !== undefined ? parent.fontFamily : "Source Sans Pro"
+    property string titleFontFamily: parent.fontFamily !== undefined ? parent.fontFamily : "Utopia"
+    property int _pointCount: delayedContent.length + bullets.length
+
+    function _advance() {
+        if (!parent.allowDelay) {
+            refreshVisibility()
+            return false
+        }
+        _pointCounter = _pointCounter + 1
+        refreshVisibility()
+        if (_pointCounter < _pointCount) {
+            return true
+        }
+        _pointCounter = 0
+        refreshVisibility()
+        return false
+    }
+
+    function _retreat() {
+        if (!parent.allowDelay) {
+            refreshVisibility()
+            return false
+        }
+        _pointCounter = _pointCounter - 1
+        if (_pointCounter >= 0) {
+            refreshVisibility()
+            return true
+        }
+        _pointCounter = 0
+        refreshVisibility()
+        return false
+    }
+
+    function refreshVisibility() {
+        for(var i in delayedContent) {
+            if(i - bullets.length <= _pointCounter) {
+                delayedContent[i].visible = true
+            } else {
+                delayedContent[i].visible = false
+            }
+        }
+    }
+
+    Component.onCompleted: {
+        for(var i in delayedContent) {
+            delayedContent[i].parent = slide
+        }
+
+        refreshVisibility()
+    }
 
     // Define the slide to be the "content area"
     x: parent.width * 0.05
@@ -63,15 +121,12 @@ Item {
     width: parent.width * 0.9
     height: parent.height * 0.90
 
-    property color slideTextColor: parent.textColor !== undefined ? parent.textColor : "black"
-    property string contentFontFamily: parent.fontFamily !== undefined ? parent.fontFamily : "Source Sans Pro"
-    property string titleFontFamily: parent.fontFamily !== undefined ? parent.fontFamily : "Utopia"
-
     visible: false
 
     Text {
         id: titleText
         text: title;
+        width: parent.width
         anchors.horizontalCenter: parent.horizontalCenter
         anchors.top: parent.top
         anchors.topMargin: parent._fontSize * 1.0
@@ -80,13 +135,14 @@ Item {
         font.pixelSize: _titleFontSize
         color: slideTextColor
         horizontalAlignment: Text.Center
+        wrapMode: Text.Wrap
     }
 
     Text {
         id: centeredId
         width: parent.width
         anchors.centerIn: parent
-//        anchors.verticalCenterOffset: parent.y / 3
+        //        anchors.verticalCenterOffset: parent.y / 3
         text: centeredText
         horizontalAlignment: Text.Center
         font.pixelSize: _baseFontSize
@@ -96,30 +152,54 @@ Item {
         wrapMode: Text.Wrap
     }
 
+    Text {
+        id: writeInTextId
+        property int length;
+        font.family: slide.contentFontFamily
+        font.pixelSize: _baseFontSize
+        color: slideTextColor
+        anchors.fill: parent;
+        wrapMode: Text.Wrap
+        text: slide.writeInText.substring(0, length);
+        NumberAnimation on length {
+            from: 0;
+            to: slide.writeInText.length;
+            duration: slide.writeInText.length * 30;
+            running: slide.visible && parent.visible && slide.writeInText.length > 0
+        }
+        visible: slide.writeInText != undefined;
+    }
+
     Column {
         id: contentId
-//        anchors {
-//            left: parent.left
-//            right: parent.right
-//            bottom: parent.bottom
-//            top: titleText.bottom
-//            topMargin: parent._fontSize * 1.0
-//        }
-        anchors.centerIn: parent
+        anchors {
+            top: titleText.bottom
+            topMargin: parent._fontSize * 1.0
+            bottom: parent.bottom
+            left: parent.left
+            right: parent.right
+        }
 
         Repeater {
-            model: content.length
+            model: bullets.length
 
             Row {
                 id: row
 
-                function decideIndentLevel(s) { return s.charAt(0) == " " ? 1 + decideIndentLevel(s.substring(1)) : 0 }
-                property int indentLevel: decideIndentLevel(content[index])
-                property int nextIndentLevel: index < content.length - 1 ? decideIndentLevel(content[index+1]) : 0
+                function decideIndentLevel(s) {
+                    if(s.charAt(0) === " ") {
+                        return 1 + decideIndentLevel(s.substring(1))
+                    } else {
+                        return 0
+                    }
+                }
+                property int indentLevel: decideIndentLevel(bullets[index])
+                property int nextIndentLevel: index < bullets.length - 1 ? decideIndentLevel(bullets[index+1]) : 0
                 property real indentFactor: (10 - row.indentLevel * 2) / 10;
 
                 height: text.height + (nextIndentLevel == 0 ? 1 : 0.3) * slide._baseFontSize * slide.bulletSpacing
                 x: slide._baseFontSize * indentLevel
+                visible: (!slide.parent.allowDelay || !delayPoints) || index <= _pointCounter
 
                 Rectangle {
                     id: dot
@@ -143,7 +223,7 @@ Item {
                     id: text
                     width: slide.contentWidth - parent.x - dot.width - space.width
                     font.pixelSize: _baseFontSize * row.indentFactor
-                    text: content[index]
+                    text: bullets[index]
                     textFormat: Text.PlainText
                     wrapMode: Text.WordWrap
                     font.family: contentFontFamily

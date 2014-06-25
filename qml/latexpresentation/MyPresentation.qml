@@ -22,7 +22,7 @@ TransitionPresentation
         anchors.fill: parent
         gradient: Gradient {
             GradientStop { position: 0.0; color: "#f7fcfd" }
-            GradientStop { position: 1.0; color: "#f7fcfd" }
+            GradientStop { position: 1.0; color: "#f7fcf0" }
         }
     }
 
@@ -32,22 +32,62 @@ TransitionPresentation
         }
     }
 
-    // Introduction
+    // -----------------------------------------------
+    // --------------- Introduction ------------------
+    // -----------------------------------------------
 
-    UpperLeftSlide {
-        title: "Atomic Interactions"
-        centeredText: "Multiple scales, quantum and microscopic,\n" +
-                      "bridged with neural networks"
+    Slide {
+        delayedContent: [
+            UpperLeftSlide {
+                title: "Booyah"
+                centeredText: "WOop"
+            }
+        ]
     }
 
-    UpperLeftSlide {
-        title: "Details from Quantum Mechanics"
-        centeredText: "Forces and chemistry"
-    }
-
-    UpperLeftSlide {
-        title: "Macroscopic Properties of Molecular Dynamics"
-        centeredText: "Pressure, temperature, etc."
+    Slide {
+        id: multiscaleSlide
+        anchors.fill: parent
+        delayedContent: [
+            UpperLeftSlide {
+                BorderedImage {
+                    anchors.fill: parent
+                    source: "../../images/ch4-electrostatic-potential.png"
+                }
+            },
+            UpperRight {
+                BorderedImage {
+                    anchors.fill: parent
+                    source: "../../images/oculusqt3d-5.png"
+                }
+            },
+            LowerLeft {
+                Text {
+                    width: parent.width
+                    anchors.centerIn: parent
+                    text: "energy,\nforce,\nelectron density"
+                    horizontalAlignment: Text.Center
+                    font.pixelSize: multiscaleSlide._baseFontSize / 2
+                    font.family: multiscaleSlide.contentFontFamily
+                    font.weight: Font.Light
+                    color: multiscaleSlide.slideTextColor
+                    wrapMode: Text.Wrap
+                }
+            },
+            LowerRight {
+                Text {
+                    width: parent.width
+                    anchors.centerIn: parent
+                    text: "temperature,\npressure,\npermeability"
+                    horizontalAlignment: Text.Center
+                    font.pixelSize: multiscaleSlide._baseFontSize / 2
+                    font.family: multiscaleSlide.contentFontFamily
+                    font.weight: Font.Light
+                    color: multiscaleSlide.slideTextColor
+                    wrapMode: Text.Wrap
+                }
+            }
+        ]
     }
 
     UpperLeftSlide {
@@ -60,7 +100,9 @@ TransitionPresentation
         centeredText: "Build a bridge between the two scales\nwith artificial neural networks"
     }
 
-    // Molecular dynamics
+    // -----------------------------------------------
+    // -----------  Molecular dynamics ---------------
+    // -----------------------------------------------
 
     UpperLeftSlide {
         Heading {
@@ -135,7 +177,9 @@ TransitionPresentation
         centeredText: "LJ is a good approximation"
     }
 
-    // Computational Quantum Mechanics
+    // -----------------------------------------------
+    // ------- Computational Quantum Mechanics -------
+    // -----------------------------------------------
 
     UpperLeftSlide {
         Heading {
@@ -145,13 +189,14 @@ TransitionPresentation
 
     UpperLeftSlide {
         title: "Assumptions"
-        content: ["Born-Oppenheimer: classical nuclei",
+        delayPoints: true
+        bullets: ["Born-Oppenheimer: classical nuclei",
             "Slater determinant: only exchange correlations"]
     }
 
     UpperLeftSlide {
         title: "Born-Oppenheimer"
-        content: ["Nuclei are treated classically",
+        bullets: ["Nuclei are treated classically",
             "Assumes ground state",
             "Coarse, but good approximation"]
     }
@@ -176,7 +221,10 @@ TransitionPresentation
         centeredText: "Energy to potential energy"
     }
 
-    // Neural networks
+    // -----------------------------------------------
+    // --------------- Neural networks ---------------
+    // -----------------------------------------------
+
 
     UpperLeftSlide {
         Heading {
@@ -224,7 +272,9 @@ TransitionPresentation
         centeredText: "Better quantum, better neural"
     }
 
-    // Visualization
+    // -----------------------------------------------
+    // ---------------- Visualization ----------------
+    // -----------------------------------------------
 
     UpperLeftSlide {
         Heading {
@@ -249,6 +299,6 @@ TransitionPresentation
 
 }
 
-// TODO: Check thesis for more content!
+// TODO: Check thesis for more bullets!
 
 

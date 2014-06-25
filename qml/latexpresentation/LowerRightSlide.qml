@@ -2,9 +2,9 @@ import QtQuick 2.0
 
 Slide {
     anchors {
-        top: parent.top
+        bottom: parent.bottom
         right: parent.right
-        topMargin: parent.height * 0.01
+        bottomMargin: parent.height * 0.01
         rightMargin: parent.width * 0.01
     }
     width: parent.width * 0.48

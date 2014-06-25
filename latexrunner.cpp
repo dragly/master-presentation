@@ -45,7 +45,7 @@ QString LatexRunner::createFormula(QString formula, QString color, bool centered
         if(centered) {
             centerCommand = "\\def \\mycentered{} ";
         }
-        QString latexCommand = "pdflatex --jobname formula \"" + centerCommand + "\\def \\mycolor{" + color + "} \\def \\myfile{" + myFormulaFileName + "} \\input{qml/latexpresentation/formula.tex}\"";
+        QString latexCommand = "pdflatex -interaction=nonstopmode --jobname formula \"" + centerCommand + "\\def \\mycolor{" + color + "} \\def \\myfile{" + myFormulaFileName + "} \\input{qml/latexpresentation/formula.tex}\"";
         qDebug() << latexCommand;
         system(latexCommand.toStdString().c_str());
 

@@ -5,7 +5,7 @@ Window {
     visible: true
     width: 1600
     height: 900
-    title: qsTr("Hello World")
+    title: qsTr("Master Presentation")
 
     MyPresentation {
         focus: true

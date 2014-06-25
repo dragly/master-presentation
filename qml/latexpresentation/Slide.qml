@@ -39,6 +39,8 @@ import QtQuick 2.2
 Item {
     id: slide
 
+    default property alias contentChildren: contentContainer.children
+
     property alias contentFont: centeredId.font
     property alias titleFont: titleText.font
 
@@ -121,7 +123,15 @@ Item {
     width: parent.width * 0.9
     height: parent.height * 0.90
 
-    visible: false
+    Item {
+        id: contentContainer
+        anchors {
+            top: title.length > 0 ? titleText.bottom : parent.top
+            bottom: parent.bottom
+            left: parent.left
+            right: parent.right
+        }
+    }
 
     Text {
         id: titleText

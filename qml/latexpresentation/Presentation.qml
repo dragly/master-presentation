@@ -73,6 +73,7 @@ Item {
             var r = root.children[i];
             if (r.isSlide) {
                 slides.push(r);
+                r.visible = false
             }
         }
 

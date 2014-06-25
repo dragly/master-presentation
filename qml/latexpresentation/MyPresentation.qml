@@ -37,15 +37,6 @@ TransitionPresentation
     // -----------------------------------------------
 
     Slide {
-        delayedContent: [
-            UpperLeftSlide {
-                title: "Booyah"
-                centeredText: "WOop"
-            }
-        ]
-    }
-
-    Slide {
         id: multiscaleSlide
         anchors.fill: parent
         delayedContent: [
@@ -55,50 +46,37 @@ TransitionPresentation
                     source: "../../images/ch4-electrostatic-potential.png"
                 }
             },
-            UpperRight {
+            UpperRightSlide {
                 BorderedImage {
                     anchors.fill: parent
                     source: "../../images/oculusqt3d-5.png"
                 }
             },
-            LowerLeft {
-                Text {
-                    width: parent.width
-                    anchors.centerIn: parent
-                    text: "energy,\nforce,\nelectron density"
-                    horizontalAlignment: Text.Center
-                    font.pixelSize: multiscaleSlide._baseFontSize / 2
-                    font.family: multiscaleSlide.contentFontFamily
-                    font.weight: Font.Light
-                    color: multiscaleSlide.slideTextColor
-                    wrapMode: Text.Wrap
-                }
+            LowerLeftSlide {
+                centeredText: "energy,\nforce,\nelectron density"
             },
-            LowerRight {
-                Text {
-                    width: parent.width
-                    anchors.centerIn: parent
-                    text: "temperature,\npressure,\npermeability"
-                    horizontalAlignment: Text.Center
-                    font.pixelSize: multiscaleSlide._baseFontSize / 2
-                    font.family: multiscaleSlide.contentFontFamily
-                    font.weight: Font.Light
-                    color: multiscaleSlide.slideTextColor
-                    wrapMode: Text.Wrap
-                }
+            LowerRightSlide {
+                centeredText: "temperature,\npressure,\npermeability"
             }
         ]
     }
 
-    UpperLeftSlide {
-        title: "Problems"
-        centeredText: "Expensive details and many atoms"
+    Slide {
+        delayedContent: [
+            UpperLeftSlide {
+                title: "Problem"
+                centeredText: "detailed calculations = expensive\nmany atoms = expensive"
+            },
+            LowerLeftSlide {
+                centeredText: "details + many atoms = unaffordable"
+            },
+            UpperRightSlide {
+                title: "Goal"
+                centeredText: "Build a bridge between the two scales\nwith artificial neural networks"
+            }
+        ]
     }
 
-    UpperLeftSlide {
-        title: "Goal"
-        centeredText: "Build a bridge between the two scales\nwith artificial neural networks"
-    }
 
     // -----------------------------------------------
     // -----------  Molecular dynamics ---------------
@@ -110,71 +88,115 @@ TransitionPresentation
         }
     }
 
-    UpperLeftSlide {
-        title: "Molecular Dynamics"
-        centeredText: "Newtonian mechanics and classical potentials"
+    Slide {
+        UpperLeftSlide {
+            title: "Molecular Dynamics"
+            centeredText: "Classical potentials and newtonian mechanics"
+        }
+        UpperRightSlide {
+            BorderedImage {
+                anchors.fill: parent
+                source: "../../images/emdee-5.png"
+            }
+        }
+        LowerRightSlide {
+            Latex {
+                width: parent.width * 0.3
+                text: "$$F = -\\nabla V$$"
+            }
+        }
     }
 
     UpperLeftSlide {
         title: "Classical Potentials"
         Latex {
             text: "$$V(\\mathbf{r}) " +
-                  " = \\sum_{k=1}^{N} V_{1}(\\mathbf{r}_{k})" +
-                  " + \\sum_{k<l}^{N} V(\\mathbf{r}_{k}, \\mathbf{r}_{l})" +
-                  " + \\sum_{k<l<m}^{N} V(\\mathbf{r}_{k}, \\mathbf{r}_{l}, \\mathbf{r}_{m})$$"
+                  " = \\sum_{i} V_{1}(\\mathbf{r}_{i})" +
+                  " + \\sum_{i<j} V_{2}(\\mathbf{r}_{i}, \\mathbf{r}_{j})" +
+                  " + \\sum_{i<j<k} V_{3}(\\mathbf{r}_{i}, \\mathbf{r}_{j}, \\mathbf{r}_{k})$$"
         }
     }
 
-    UpperLeftSlide {
-        title: "Two-body Terms"
-        Latex {
-            width: parent.width * 0.5
-            text: "$$ V_{2}(\\mathbf{r}_{i}, \\mathbf{r}_{j})" +
-                  " = V_{2}(r_{ij})$$"
+    Slide {
+        delayedContent: [
+            UpperLeftSlide {
+                title: "Two-Body Terms"
+                Latex {
+                    width: parent.width * 0.5
+                    text: "$$ V_{2}(\\mathbf{r}_{i}, \\mathbf{r}_{j})" +
+                          " = V_{2}(r_{ij})$$"
+                }
+            },
+            Item {
+                anchors.fill: parent
+                UpperRightSlide {
+                    title: "Lennard-Jones"
+                    Latex {
+                        width: parent.width * 0.5
+                        text: "$$V_{\\mathrm{LJ}}(r)" +
+                              " = 4\\epsilon \\left ( \\frac{\\sigma^{12}}{r^{12}} - \\frac{\\sigma^{6}}{r^{6}} \\right)$$"
+                    }
+                }
+                LowerRightSlide {
+                    BorderedImage {
+                        anchors.fill: parent
+                        source: "../../images/lennard-jones.png"
+                    }
+                }
+            }
+        ]
+    }
+
+    Slide {
+        UpperLeftSlide {
+            title: "Three-Body Terms"
+            Latex {
+                width: parent.width * 0.7
+                text: "$$ V_{3}(\\mathbf{r}_{i}, \\mathbf{r}_{j}, \\mathbf{r}_{k})" +
+                      " = V_{3}(r_{ij}, r_{ik}, \\theta_{jik})$$"
+            }
         }
-    }
-
-    UpperLeftSlide {
-        title: "Lennard-Jones"
-        Latex {
-            width: parent.width * 0.5
-            text: "$$V_{\\mathrm{LJ}}(r)" +
-                  " = 4\\epsilon \\left ( \\frac{\\sigma^{12}}{r^{12}} - \\frac{\\sigma^{6}}{r^{6}} \\right)$$"
+        UpperRightSlide {
+            Image {
+                anchors.fill: parent
+                anchors.margins: parent.width * 0.1
+                fillMode: Image.PreserveAspectFit
+                source: "../../images/trimer-ijk.png"
+                antialiasing: true
+                smooth: true
+            }
         }
-    }
-
-    UpperLeftSlide {
-        title: "Three-Body Terms"
-        Latex {
-            width: parent.width * 0.7
-            text: "$$ V_{3}(\\mathbf{r}_{i}, \\mathbf{r}_{j}, \\mathbf{r}_{k})" +
-                  " = V_{3}(r_{ij}, r_{ik}, \\theta_{jik})$$"
-        }
-    }
-
-    UpperLeftSlide {
-        title: "Measurements"
-        centeredText: "Statistical sampling of pressure and temperature"
-    }
-
-    UpperLeftSlide {
-        title: "Modifications"
-        centeredText: "Thermostats, volume changes, friction, ..."
     }
 
     UpperLeftSlide {
         title: "Does It Make Sense?"
-        centeredText: "Is the potential reasonable?"
+        centeredText: "Are the results reasonable?"
+    }
+
+    Slide {
+        delayedContent: [
+            UpperLeftSlide {
+                title: "Test Case: Argon Crystallization"
+                centeredText: "Boiling argon\ncooled slowly"
+            },
+            LowerLeftSlide {
+                BorderedImage {
+                    anchors.fill: parent
+                    source: "../../images/argon-crystallization-energy-pressure.png"
+                }
+            },
+            UpperRightSlide {
+                BorderedImage {
+                    anchors.fill: parent
+                    source: "../../images/argon-crystallization-focus-blur.png"
+                }
+            }
+        ]
     }
 
     UpperLeftSlide {
         title: "Where Does It Come From?"
-        centeredText: "Experiments and/or quantum mechanics"
-    }
-
-    UpperLeftSlide {
-        title: "Results with Argon"
-        centeredText: "LJ is a good approximation"
+        centeredText: "From experiments and/or quantum mechanics"
     }
 
     // -----------------------------------------------
@@ -213,7 +235,78 @@ TransitionPresentation
 
     UpperLeftSlide {
         title: "Electron Density"
-        centeredText: "Screenshots! Live?"
+        centeredText: "Live!"
+    }
+
+    Slide {
+        UpperLeftSlide {
+            title: "Electrostatic Potential"
+            centeredText: "Shows electro- and nucleophilic areas"
+        }
+        UpperRightSlide {
+            BorderedImage {
+                anchors {
+                    left: parent.left
+                    right: parent.right
+                    bottom: h2oTitle.top
+                    top: parent.top
+                }
+                source: "../../images/h2o-electrostatic-potential-bearboat-3-cropped.png"
+            }
+            Latex {
+                id: h2oTitle
+                anchors {
+                    bottom: parent.bottom
+                    centerIn: undefined
+                    horizontalCenter: parent.horizontalCenter
+                }
+                width: parent.width * 0.1
+                text: "H$_2$O"
+            }
+        }
+        LowerLeftSlide {
+            BorderedImage {
+                anchors {
+                    left: parent.left
+                    right: parent.right
+                    bottom: ch4Title.top
+                    top: parent.top
+                }
+
+                source: "../../images/ch4-electrostatic-potential-2.png"
+            }
+            Latex {
+                id: ch4Title
+                anchors {
+                    bottom: parent.bottom
+                    centerIn: undefined
+                    horizontalCenter: parent.horizontalCenter
+                }
+                width: parent.width * 0.1
+                text: "CH$_4$"
+            }
+        }
+        LowerRightSlide {
+            BorderedImage {
+                anchors {
+                    left: parent.left
+                    right: parent.right
+                    bottom: nh3Title.top
+                    top: parent.top
+                }
+                source: "../../images/nh3-electrostatic-potential.png"
+            }
+            Latex {
+                id: nh3Title
+                anchors {
+                    bottom: parent.bottom
+                    centerIn: undefined
+                    horizontalCenter: parent.horizontalCenter
+                }
+                width: parent.width * 0.1
+                text: "NH$_3$"
+            }
+        }
     }
 
     UpperLeftSlide {
@@ -232,24 +325,56 @@ TransitionPresentation
         }
     }
 
-    UpperLeftSlide {
-        title: "Training"
-        centeredText: "Trained to reproduce results"
+    Slide {
+        delayedContent: [
+            UpperLeftSlide {
+                title: "Neural Network"
+                centeredText: "Connected neurons"
+            },
+            LowerLeftSlide {
+                Image {
+                    anchors.fill: parent
+                    source: "../../images/network.png"
+                    fillMode: Image.PreserveAspectFit
+                    antialiasing: true
+                    smooth: true
+                }
+            },
+            UpperRightSlide {
+                title: "Neuron"
+                Latex {
+                    width: parent.width * 0.5
+                    text: "$$y(\\mathbf{x}) = g \\left ( \\sum_{i=1}^{n} w_{i} x_{i} \\right )$$"
+                }
+            },
+            LowerRightSlide {
+                Image {
+                    anchors.fill: parent
+                    source: "../../images/neuron.png"
+                    fillMode: Image.PreserveAspectFit
+                    antialiasing: true
+                    smooth: true
+                }
+            }
+        ]
     }
 
-    UpperLeftSlide {
-        title: "Neurons"
-        centeredText: "The neuron consists of"
-    }
-
-    UpperLeftSlide {
-        title: "Neural Network"
-        centeredText: "Connected neurons"
-    }
-
-    UpperLeftSlide {
-        title: "Neural Network"
-        centeredText: "Input/output"
+    Slide {
+        delayedContent: [
+            UpperLeftSlide {
+                title: "Training"
+                centeredText: "Backpropagation"
+            },
+            UpperRightSlide {
+                Image {
+                    anchors.fill: parent
+                    source: "../../images/split-neuron.png"
+                    fillMode: Image.PreserveAspectFit
+                    antialiasing: true
+                    smooth: true
+                }
+            }
+        ]
     }
 
     UpperLeftSlide {

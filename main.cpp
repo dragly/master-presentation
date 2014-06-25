@@ -9,7 +9,7 @@ int main(int argc, char *argv[])
     QApplication app(argc, argv);
 
     QQmlApplicationEngine engine;
-    engine.load(QUrl(QStringLiteral("qrc:///qml/latexpresentation/main.qml")));
+    engine.load(QUrl(QStringLiteral("qml/latexpresentation/main.qml")));
 
     return app.exec();
 }

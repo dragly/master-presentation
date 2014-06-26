@@ -155,6 +155,30 @@ TransitionPresentation
     }
 
     Slide {
+        UpperLeftSlide {
+            title: "Molecular Dynamics Implementation"
+            centeredText: "General code.\n" +
+                          "Built-in selection of potentials.\n" +
+                          "Extensible.\n" +
+                          "Performance-centric."
+        }
+
+        Image {
+            anchors {
+                right: parent.right
+                top: parent.top
+                bottom: parent.bottom
+            }
+            width: parent.width * 0.45
+
+            fillMode: Image.PreserveAspectFit
+            source: "../../images/md-implementation-simple.png"
+            antialiasing: true
+            smooth: true
+        }
+    }
+
+    Slide {
         delayedContent: [
             UpperLeftSlide {
                 title: "Classical Potentials"
@@ -174,12 +198,25 @@ TransitionPresentation
 
     Slide {
         delayedContent: [
-            UpperLeftSlide {
-                title: "Two-Body Terms"
-                Latex {
-                    width: parent.width * 0.5
-                    text: "$$ V_{2}(\\mathbf{r}_{i}, \\mathbf{r}_{j})" +
-                          " = V_{2}(r_{ij})$$"
+            Item {
+                anchors.fill: parent
+                LowerLeftSlide {
+                    Image {
+                        anchors.fill: parent
+                        anchors.margins: parent.width * 0.2
+                        fillMode: Image.PreserveAspectFit
+                        source: "../../images/dimer-ij.png"
+                        antialiasing: true
+                        smooth: true
+                    }
+                }
+                UpperLeftSlide {
+                    title: "Two-Body Terms"
+                    Latex {
+                        width: parent.width * 0.5
+                        text: "$$ V_{2}(\\mathbf{r}_{i}, \\mathbf{r}_{j})" +
+                              " = V_{2}(r_{ij})$$"
+                    }
                 }
             },
             Item {
@@ -203,29 +240,84 @@ TransitionPresentation
     }
 
     Slide {
-        UpperLeftSlide {
-            title: "Three-Body Terms"
-            Latex {
-                width: parent.width * 0.7
-                text: "$$ V_{3}(\\mathbf{r}_{i}, \\mathbf{r}_{j}, \\mathbf{r}_{k})" +
-                      " = V_{3}(r_{ij}, r_{ik}, \\theta_{jik})$$"
-            }
-        }
-        UpperRightSlide {
-            Image {
+        delayedContent: [
+            Item {
                 anchors.fill: parent
-                anchors.margins: parent.width * 0.1
-                fillMode: Image.PreserveAspectFit
-                source: "../../images/trimer-ijk.png"
-                antialiasing: true
-                smooth: true
+                UpperLeftSlide {
+                    title: "Three-Body Terms"
+                    Latex {
+                        width: parent.width * 0.7
+                        text: "$$ V_{3}(\\mathbf{r}_{i}, \\mathbf{r}_{j}, \\mathbf{r}_{k})" +
+                              " = V_{3}(r_{ij}, r_{ik}, \\theta_{jik})$$"
+                    }
+                }
+                LowerLeftSlide {
+                    Image {
+                        anchors.fill: parent
+                        anchors.margins: parent.width * 0.1
+                        fillMode: Image.PreserveAspectFit
+                        source: "../../images/trimer-ijk.png"
+                        antialiasing: true
+                        smooth: true
+                    }
+                }
+            },
+            Item {
+                anchors.fill: parent
+                UpperRightSlide {
+                    title: "Kohen-Tully-Stillinger"
+                    Latex {
+                        text: "\\begin{equation*}
+                          h(r_{ji}, r_{ik}, \\theta_{ijk})
+                          =
+                          \\left \\{
+                          \\begin{array}{ll}
+                              \\lambda_{ijk} a
+                              \\exp
+                              \\left(
+                                \\dfrac{\\gamma_{ij(k)}^{3}}{r_{ji} - r_{0}} + \\dfrac{\\gamma_{(i)jk}}{r_{jk} - r_{0}}
+                              \\right),
+                            &
+                            r_{ij}, r_{ik} < r_{0}
+                            \\\\
+                            0
+                            &
+                            \\text{otherwise}.
+                          \\end{array}
+                          \\right .
+                        \\end{equation*}
+                        \\begin{equation*}
+                          a = \\left(1 + \\mu_{ijk} \\cos \\theta_{ijk} + \\nu_{ijk} (\\cos \\theta_{ijk})^{2} \\right)
+                        \\end{equation*}"
+                    }
+                }
+                LowerRightSlide {
+                    BorderedImage {
+                        anchors.fill: parent
+                        source: "../../images/kohen-tully-stillinger.png"
+                    }
+                }
             }
-        }
+        ]
     }
 
-    UpperLeftSlide {
-        title: "Does It Make Sense?"
-        centeredText: "Are the results reasonable?"
+    Slide {
+        UpperLeftSlide {
+            title: "Advanced Potentials:\nReaxFF (9+ terms)"
+            Latex {
+                text: "\\begin{equation*}
+                        \\begin{split}
+                          V
+                          = & ~
+                          V_{\\text{bond}} + V_{\\text{over}} + V_{\\text{under}} + V_{\\text{penalty}} + V_{\\text{valence}} +
+                          \\\\
+                          & ~ V_{\\text{torsion}} + V_{\\text{conj}} + V_{\\text{van der Waals}} + V_{\\text{Coulomb}}
+                        \\end{split}
+                        \\end{equation*}"
+            }
+        }
+        LowerLeftSlide {
+        }
     }
 
     Slide {
@@ -234,6 +326,12 @@ TransitionPresentation
                 title: "Test Case: Argon Crystallization"
                 centeredText: "Boiling argon\n" +
                               "cooled slowly."
+            },
+            LowerLeftSlide {
+                BorderedImage {
+                    anchors.fill: parent
+                    source: "../../images/argon-crystallization-focus-blur.png"
+                }
             },
             Item {
                 anchors.fill: parent
@@ -247,12 +345,6 @@ TransitionPresentation
                     centeredText: "Phase change at about 90K.\n" +
                                   "True boiling point: 87K.\n" +
                                   "True melting point: 84K."
-                }
-            },
-            LowerLeftSlide {
-                BorderedImage {
-                    anchors.fill: parent
-                    source: "../../images/argon-crystallization-focus-blur.png"
                 }
             }
         ]
@@ -274,42 +366,113 @@ TransitionPresentation
     Slide {
         delayedContent: [
             UpperLeftSlide {
-                title: "Born-Oppenheimer"
-                centeredText: "Nuclei are treated classically.\n" +
-                              "Assumes ground state.\n" +
-                              "Coarse, but good approximation."
+                title: "Computational Quantum Mechanics\nof Atomic Systems"
+                centeredText: "Solving the Schrödinger equation\nfor nuclei and electrons."
             },
             UpperRightSlide {
-                title: "Slater Determinant"
+                title: "Schrödinger equation"
                 Latex {
-                    text: "$$\\Psi = \\frac{1}{\\sqrt{{N}!}}
-                            \\left|
-                            \\begin{array}{cccc}
-                              \\psi_{{1}} (\\mathbf x_{1}) & \\psi_{{1}} (\\mathbf x_{2}) & \\cdots & \\psi_{{1}} (\\mathbf
-                              x_{N})
-                              \\\\
-                              \\psi_{{2}} (\\mathbf x_{1}) & \\psi_{{2}} (\\mathbf x_{2}) & \\cdots & \\psi_{{2}} (\\mathbf
-                              x_{N})
-                              \\\\
-                              \\vdots & \\vdots & \\ddots & \\vdots
-                              \\\\
-                              \\psi_{{N}} (\\mathbf x_{1}) & \\psi_{{N}} (\\mathbf x_{2}) & \\cdots &
-                              \\psi_{{N}} (\\mathbf x_{N})
-                            \\end{array}
-                            \\right|$$"
+                    width: parent.width * 0.3
+                    text: "$$H\\Psi = E\\Psi$$"
+                }
+            },
+            LowerRightSlide {
+                title: "Hamiltonian"
+                Latex {
+                    width: parent.width
+                    text: "\\begin{align*}
+                          H
+                          = &
+                          - \\sum_{i}^{N}
+                          \\frac{1}{2} \\nabla_{r_i}^2 - \\sum_{n}^{N_n} \\frac{1}{2m_p} \\nabla_{R_i}^2 +
+                          \\sum_{n<m}^{N_n}
+                          \\frac{Z_n Z_m}{|\\mathbf R_n - \\mathbf R_m|} \\\\
+                          &- \\frac{1}{2} \\sum_{i}^{N} \\sum_{n}^{N_n} \\frac{Z_n}{|\\mathbf r_i -
+                          \\mathbf
+                          R_n|}
+                          + \\sum_{i<j}^{N} \\frac{1}{|\\mathbf r_i - \\mathbf r_j|}
+                        \\end{align*}"
                 }
             }
         ]
     }
 
-    UpperLeftSlide {
-        title: "Hartree-Fock Method"
-        centeredText: "Slater determinant, single-particle wave functions"
+    // TODO Cutoff, backup slides, Hamiltonian
+
+    Slide {
+        delayedContent: [
+            Item {
+                anchors.fill: parent
+                UpperLeftSlide {
+                    title: "Born-Oppenheimer"
+                    Latex {
+                        width: parent.width * 0.9
+                        text: "\\begin{equation*}
+                              H
+                              =
+                              - \\sum_{i}^{N} \\frac{1}{2} \\nabla_{r_i}^2
+                              - \\frac{1}{2} \\sum_{i}^{N} \\sum_{n}^{N_n} \\frac{Z_n}{|\\mathbf r_i - \\mathbf R_n|}
+                              + \\sum_{i<j}^{N} \\frac{1}{|\\mathbf r_i - \\mathbf r_j|}
+                            \\end{equation*}"
+                    }
+                }
+                LowerLeftSlide {
+                    centeredText: "Nuclei are treated classically.\n" +
+                                  "Argued for by mass difference.\n" +
+                                  "Coarse, but good approximation."
+                }
+            },
+            Item {
+                anchors.fill: parent
+                UpperRightSlide {
+                    title: "Slater Determinant"
+                    Latex {
+                        width: parent.width * 0.9
+                        text: "$$\\Psi = \\frac{1}{\\sqrt{{N}!}}
+                                \\left|
+                                \\begin{array}{cccc}
+                                  \\psi_{{1}} (\\mathbf x_{1}) & \\psi_{{1}} (\\mathbf x_{2}) & \\cdots & \\psi_{{1}} (\\mathbf
+                                  x_{N})
+                                  \\\\
+                                  \\psi_{{2}} (\\mathbf x_{1}) & \\psi_{{2}} (\\mathbf x_{2}) & \\cdots & \\psi_{{2}} (\\mathbf
+                                  x_{N})
+                                  \\\\
+                                  \\vdots & \\vdots & \\ddots & \\vdots
+                                  \\\\
+                                  \\psi_{{N}} (\\mathbf x_{1}) & \\psi_{{N}} (\\mathbf x_{2}) & \\cdots &
+                                  \\psi_{{N}} (\\mathbf x_{N})
+                                \\end{array}
+                                \\right|$$"
+                    }
+                }
+                LowerRightSlide {
+                    centeredText: "Single-particle wave functions.\n" +
+                                  "No correlations apart from exchange.\n" +
+                                  "Leads to molecular orbital theory."
+                }
+            }
+        ]
     }
 
-    UpperLeftSlide {
-        title: "Hartree-Fock Method"
-        centeredText: "Mean field approximation"
+    Slide {
+        UpperLeftSlide {
+            title: "Hartree-Fock Method"
+            centeredText: "Self-consistent." +
+                          "Iterative scheme.\n"
+        }
+        Image {
+            anchors {
+                right: parent.right
+                top: parent.top
+                bottom: parent.bottom
+            }
+            width: parent.width * 0.45
+
+            fillMode: Image.PreserveAspectFit
+            source: "../../images/hf-flow.png"
+            antialiasing: true
+            smooth: true
+        }
     }
 
     Slide {
@@ -561,15 +724,59 @@ TransitionPresentation
         ]
     }
 
+    // -----------------------------------------------
+    // --------------- Neural networks ---------------
+    // -----------------------------------------------
+
+
+    UpperLeftSlide {
+        Heading {
+            text: "Hydrogen Molecules:\n" +
+                  "Results of the Complete Workflow"
+        }
+    }
+
     Slide {
         UpperLeftSlide {
-            title: "Molecular Dynamics Results"
+            title: "Results of the Complete Workflow"
             centeredText: "Hydrogen molecules!"
         }
         UpperRightSlide {
             BorderedImage {
                 anchors.fill: parent
                 source: "../../images/hydrogen-molecules-large-spheres-light-blue.png"
+            }
+        }
+    }
+
+    Slide {
+        UpperLeftSlide {
+            title: "Hydrogen Dissociation"
+            Latex {
+                width: parent.width * 0.6
+                text: "Radial distribution $g(r)$."
+            }
+        }
+
+        UpperRightSlide {
+            title: "(14 K)"
+            BorderedImage {
+                anchors.fill: parent
+                source: "../../images/dissociation-plot-14K.png"
+            }
+        }
+        LowerLeftSlide {
+            title: "(156 K)"
+            BorderedImage {
+                anchors.fill: parent
+                source: "../../images/dissociation-plot-14K.png"
+            }
+        }
+        LowerRightSlide {
+            title: "(15990 K)"
+            BorderedImage {
+                anchors.fill: parent
+                source: "../../images/dissociation-plot-15990K.png"
             }
         }
     }

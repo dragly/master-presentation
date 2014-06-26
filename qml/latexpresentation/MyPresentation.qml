@@ -120,22 +120,33 @@ TransitionPresentation
     }
 
     Slide {
-        UpperLeftSlide {
-            title: "Molecular Dynamics"
-            centeredText: "Classical potentials and newtonian mechanics"
-        }
-        UpperRightSlide {
-            BorderedImage {
-                anchors.fill: parent
-                source: "../../images/emdee-5.png"
+        delayedContent: [
+            UpperLeftSlide {
+                title: "Molecular Dynamics"
+                centeredText: "Classical potentials\nand newtonian mechanics"
+            },
+            LowerLeftSlide {
+                centeredText: "Particles defined by position, velocity and type.\n" +
+                              "Step-wise time-integration.\n" +
+                              "Forces from potential:"
+                Latex {
+                    anchors {
+                        bottom: parent.bottom
+                        bottomMargin: parent.height * 0.1
+                        horizontalCenter: parent.horizontalCenter
+                        centerIn: undefined
+                    }
+                    width: parent.width * 0.2
+                    text: "$$F = -\\nabla V$$"
+                }
+            },
+            UpperRightSlide {
+                BorderedImage {
+                    anchors.fill: parent
+                    source: "../../images/emdee-5.png"
+                }
             }
-        }
-        LowerRightSlide {
-            Latex {
-                width: parent.width * 0.3
-                text: "$$F = -\\nabla V$$"
-            }
-        }
+        ]
     }
 
     UpperLeftSlide {

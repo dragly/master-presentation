@@ -58,7 +58,7 @@ Item {
     property real _baseFontSize: _fontSize * _fontScale
     property real _titleFontSize: _fontSize * _fontScale * 1.03
     property int _pointCounter: 0
-    property real bulletSpacing: 1
+    property real bulletSpacing: 0.1
 
     property real contentWidth: width
     property string writeInText

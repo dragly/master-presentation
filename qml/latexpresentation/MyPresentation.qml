@@ -103,7 +103,12 @@ TransitionPresentation
             },
             UpperRightSlide {
                 title: "Goal"
-                centeredText: "Build a bridge between the two scales\nwith artificial neural networks"
+                centeredText: "Build a bridge between the two scales.\n" +
+                              "Keep both quality and quantity."
+            },
+            LowerRightSlide {
+                title: "How?"
+                centeredText: "With artificial neural networks"
             }
         ]
     }
@@ -149,19 +154,22 @@ TransitionPresentation
         ]
     }
 
-    UpperLeftSlide {
-        title: "Classical Potentials"
-        Latex {
-            text: "$$V(\\mathbf{r}) " +
-                  " = \\sum_{i} V_{1}(\\mathbf{r}_{i})" +
-                  " + \\sum_{i<j} V_{2}(\\mathbf{r}_{i}, \\mathbf{r}_{j})" +
-                  " + \\sum_{i<j<k} V_{3}(\\mathbf{r}_{i}, \\mathbf{r}_{j}, \\mathbf{r}_{k})$$"
-        }
-    }
-
-    UpperLeftSlide {
-        title: "How Do We Define a Potential?"
-        centeredText: "From experiments\nand/or quantum mechanics"
+    Slide {
+        delayedContent: [
+            UpperLeftSlide {
+                title: "Classical Potentials"
+                Latex {
+                    text: "$$V(\\mathbf{r}) " +
+                          " = \\sum_{i} V_{1}(\\mathbf{r}_{i})" +
+                          " + \\sum_{i<j} V_{2}(\\mathbf{r}_{i}, \\mathbf{r}_{j})" +
+                          " + \\sum_{i<j<k} V_{3}(\\mathbf{r}_{i}, \\mathbf{r}_{j}, \\mathbf{r}_{k}) + \\ldots$$"
+                }
+            },
+            UpperRightSlide {
+                title: "How Do We Define a Potential?"
+                centeredText: "From experiments\nand/or quantum mechanics"
+            }
+        ]
     }
 
     Slide {
@@ -224,7 +232,8 @@ TransitionPresentation
         delayedContent: [
             UpperLeftSlide {
                 title: "Test Case: Argon Crystallization"
-                centeredText: "Boiling argon\ncooled slowly"
+                centeredText: "Boiling argon\n" +
+                              "cooled slowly."
             },
             Item {
                 anchors.fill: parent
@@ -249,6 +258,8 @@ TransitionPresentation
         ]
     }
 
+    // TODO: Show live heating/cooling
+
     // -----------------------------------------------
     // ------- Computational Quantum Mechanics -------
     // -----------------------------------------------
@@ -259,18 +270,36 @@ TransitionPresentation
         }
     }
 
-    UpperLeftSlide {
-        title: "Assumptions"
-        delayPoints: true
-        bullets: ["Born-Oppenheimer: classical nuclei",
-            "Slater determinant: only exchange correlations"]
-    }
 
-    UpperLeftSlide {
-        title: "Born-Oppenheimer"
-        bullets: ["Nuclei are treated classically",
-            "Assumes ground state",
-            "Coarse, but good approximation"]
+    Slide {
+        delayedContent: [
+            UpperLeftSlide {
+                title: "Born-Oppenheimer"
+                centeredText: "Nuclei are treated classically.\n" +
+                              "Assumes ground state.\n" +
+                              "Coarse, but good approximation."
+            },
+            UpperRightSlide {
+                title: "Slater Determinant"
+                Latex {
+                    text: "$$\\Psi = \\frac{1}{\\sqrt{{N}!}}
+                            \\left|
+                            \\begin{array}{cccc}
+                              \\psi_{{1}} (\\mathbf x_{1}) & \\psi_{{1}} (\\mathbf x_{2}) & \\cdots & \\psi_{{1}} (\\mathbf
+                              x_{N})
+                              \\\\
+                              \\psi_{{2}} (\\mathbf x_{1}) & \\psi_{{2}} (\\mathbf x_{2}) & \\cdots & \\psi_{{2}} (\\mathbf
+                              x_{N})
+                              \\\\
+                              \\vdots & \\vdots & \\ddots & \\vdots
+                              \\\\
+                              \\psi_{{N}} (\\mathbf x_{1}) & \\psi_{{N}} (\\mathbf x_{2}) & \\cdots &
+                              \\psi_{{N}} (\\mathbf x_{N})
+                            \\end{array}
+                            \\right|$$"
+                }
+            }
+        ]
     }
 
     UpperLeftSlide {
@@ -481,9 +510,21 @@ TransitionPresentation
 
     Slide {
         delayedContent: [
-            UpperLeftSlide {
-                title: "Training"
-                centeredText: "Backpropagation"
+            Item {
+                anchors.fill: parent
+                UpperLeftSlide {
+                    title: "Training"
+                    centeredText: "Backpropagation"
+                }
+                LowerLeftSlide {
+                    Image {
+                        anchors.fill: parent
+                        source: "../../images/network.png"
+                        fillMode: Image.PreserveAspectFit
+                        antialiasing: true
+                        smooth: true
+                    }
+                }
             },
             UpperRightSlide {
                 Image {
@@ -497,24 +538,45 @@ TransitionPresentation
         ]
     }
 
-    UpperLeftSlide {
-        title: "Approximating potentials"
-        centeredText: "Show images!"
+    Slide {
+        delayedContent: [
+            UpperLeftSlide {
+                title: "Approximating potentials"
+                centeredText: "Calculate energy for configurations.\n" +
+                              "Train network.\n" +
+                              "Plot result."
+            },
+            UpperRightSlide {
+                BorderedImage {
+                    anchors.fill: parent
+                    source: "../../images/neural-approximation-h2.png"
+                }
+            },
+            LowerRightSlide {
+                BorderedImage {
+                    anchors.fill: parent
+                    source: "../../images/neural-approximation-h3.png"
+                }
+            }
+        ]
     }
 
-    UpperLeftSlide {
-        title: "Results in Hydrogen Molecules"
-        centeredText: "Show images!"
-    }
-
-    UpperLeftSlide {
-        title: "Hydrogen Dissociation"
-        centeredText: "Show results!"
+    Slide {
+        UpperLeftSlide {
+            title: "Molecular Dynamics Results"
+            centeredText: "Hydrogen molecules!"
+        }
+        UpperRightSlide {
+            BorderedImage {
+                anchors.fill: parent
+                source: "../../images/hydrogen-molecules-large-spheres-light-blue.png"
+            }
+        }
     }
 
     UpperLeftSlide {
         title: "Future Possibilities"
-        centeredText: "Better quantum, better neural"
+        centeredText: "Better quantum\nbetter neural"
     }
 
     // -----------------------------------------------

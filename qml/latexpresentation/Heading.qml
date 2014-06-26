@@ -9,4 +9,5 @@ Text{
     verticalAlignment: Text.AlignVCenter
     horizontalAlignment: Text.AlignHCenter
     lineHeight: 1.2
+    width: 200
 }

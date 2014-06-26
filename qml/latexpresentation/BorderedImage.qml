@@ -32,7 +32,7 @@ Item {
                 id: image
                 anchors {
                     fill: parent
-                    margins: (borderWidth+shadowRadius)*2
+                    margins: (borderWidth+shadowRadius)
                 }
                 fillMode: Image.PreserveAspectFit
                 antialiasing: true

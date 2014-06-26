@@ -27,8 +27,37 @@ TransitionPresentation
     }
 
     UpperLeftSlide {
+        id: firstSlide
         Heading {
+            anchors {
+                verticalCenterOffset: -parent.height * 0.1
+            }
+
             text: "Bridging Quantum Mechanics\nand Molecular Dynamics\nwith Artificial Neural Networks"
+        }
+        Text {
+            width: parent.width
+            anchors.horizontalCenter: parent.horizontalCenter
+            anchors.bottom: frontPageSupervisorsText.top
+            anchors.bottomMargin: parent.height * 0.05
+            font.family: firstSlide.titleFontFamily
+            font.pixelSize: firstSlide._titleFontSize * 0.5
+            lineHeight: 1.2
+            horizontalAlignment: Text.Center
+            wrapMode: Text.Wrap
+            text: "Svenn-Arne Dragly\nUniversity of Oslo\nJune 2014"
+        }
+        Text {
+            id: frontPageSupervisorsText
+            width: parent.width
+            anchors.horizontalCenter: parent.horizontalCenter
+            anchors.bottom: parent.bottom
+            font.family: firstSlide.titleFontFamily
+            font.pixelSize: firstSlide._titleFontSize * 0.425
+            lineHeight: 1.4
+            horizontalAlignment: Text.Center
+            wrapMode: Text.Wrap
+            text: "Supervisors: Morten Hjorth-Jensen and Anders Malthe-Sørenssen"
         }
     }
 
@@ -41,12 +70,14 @@ TransitionPresentation
         anchors.fill: parent
         delayedContent: [
             UpperLeftSlide {
+                title: "Quantum Mechanics"
                 BorderedImage {
                     anchors.fill: parent
                     source: "../../images/ch4-electrostatic-potential.png"
                 }
             },
             UpperRightSlide {
+                title: "Molecular Dynamics"
                 BorderedImage {
                     anchors.fill: parent
                     source: "../../images/oculusqt3d-5.png"
@@ -117,6 +148,11 @@ TransitionPresentation
         }
     }
 
+    UpperLeftSlide {
+        title: "How Do We Define a Potential?"
+        centeredText: "From experiments\nand/or quantum mechanics"
+    }
+
     Slide {
         delayedContent: [
             UpperLeftSlide {
@@ -179,24 +215,27 @@ TransitionPresentation
                 title: "Test Case: Argon Crystallization"
                 centeredText: "Boiling argon\ncooled slowly"
             },
-            LowerLeftSlide {
-                BorderedImage {
-                    anchors.fill: parent
-                    source: "../../images/argon-crystallization-energy-pressure.png"
+            Item {
+                anchors.fill: parent
+                LowerRightSlide {
+                    BorderedImage {
+                        anchors.fill: parent
+                        source: "../../images/argon-crystallization-energy-pressure.png"
+                    }
+                }
+                UpperRightSlide {
+                    centeredText: "Phase change at about 90K.\n" +
+                                  "True boiling point: 87K.\n" +
+                                  "True melting point: 84K."
                 }
             },
-            UpperRightSlide {
+            LowerLeftSlide {
                 BorderedImage {
                     anchors.fill: parent
                     source: "../../images/argon-crystallization-focus-blur.png"
                 }
             }
         ]
-    }
-
-    UpperLeftSlide {
-        title: "Where Does It Come From?"
-        centeredText: "From experiments and/or quantum mechanics"
     }
 
     // -----------------------------------------------
@@ -233,9 +272,79 @@ TransitionPresentation
         centeredText: "Mean field approximation"
     }
 
-    UpperLeftSlide {
-        title: "Electron Density"
-        centeredText: "Live!"
+    Slide {
+        delayedContent: [
+            UpperLeftSlide {
+                title: "Electron Density"
+                centeredText: "Live!"
+            },
+            Item {
+                anchors.fill: parent
+                UpperRightSlide {
+                    BorderedImage {
+                        anchors {
+                            left: parent.left
+                            right: parent.right
+                            bottom: h2oTitle2.top
+                            top: parent.top
+                        }
+                        source: "../../images/highcontrast.png"
+                    }
+                    Latex {
+                        id: h2oTitle2
+                        anchors {
+                            bottom: parent.bottom
+                            centerIn: undefined
+                            horizontalCenter: parent.horizontalCenter
+                        }
+                        width: parent.width * 0.1
+                        text: "H$_2$O"
+                    }
+                }
+                LowerLeftSlide {
+                    BorderedImage {
+                        anchors {
+                            left: parent.left
+                            right: parent.right
+                            bottom: nh3Title2.top
+                            top: parent.top
+                        }
+                        source: "../../images/nh3-orbital5-cropped.png"
+                    }
+                    Latex {
+                        id: nh3Title2
+                        anchors {
+                            bottom: parent.bottom
+                            centerIn: undefined
+                            horizontalCenter: parent.horizontalCenter
+                        }
+                        width: parent.width * 0.1
+                        text: "NH$_3$"
+                    }
+                }
+                LowerRightSlide {
+                    BorderedImage {
+                        anchors {
+                            left: parent.left
+                            right: parent.right
+                            bottom: o2Title2.top
+                            top: parent.top
+                        }
+                        source: "../../images/o2-orbital-15-high-contrast-cropped.png"
+                    }
+                    Latex {
+                        id: o2Title2
+                        anchors {
+                            bottom: parent.bottom
+                            centerIn: undefined
+                            horizontalCenter: parent.horizontalCenter
+                        }
+                        width: parent.width * 0.07
+                        text: "O$_2$"
+                    }
+                }
+            }
+        ]
     }
 
     Slide {
@@ -407,19 +516,41 @@ TransitionPresentation
         }
     }
 
-    UpperLeftSlide {
-        title: "Volume Rendering of Density"
-        centeredText: "Show images!"
+    Slide {
+        UpperLeftSlide {
+            title: "Volume Rendering of Density"
+            centeredText: "Rays are traced through a cube of volume data.\n"+
+                          "Values of the data are accumulated and define the intensity and color of a pixel."
+        }
+        UpperRightSlide {
+            BorderedImage {
+                anchors.fill: parent
+                source: "../../images/raytracing.png"
+            }
+        }
     }
 
-    UpperLeftSlide {
-        title: "Millions of Atoms"
-        centeredText: "Show images!"
+    Slide {
+        delayedContent: [
+            UpperLeftSlide {
+                title: "Millions of Atoms"
+                centeredText: "Live demo!"
+            },
+            UpperRightSlide {
+                BorderedImage {
+                    anchors.fill: parent
+                    source: "../../images/oculusqt3d-3.png"
+                }
+            }
+        ]
     }
 
     UpperLeftSlide {
         title: "Virtual Reality"
-        centeredText: "Show images!"
+        centeredText: "Live demo!"
+    }
+
+    UpperLeftSlide {
     }
 
 }

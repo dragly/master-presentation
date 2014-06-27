@@ -117,11 +117,16 @@ Item {
         refreshVisibility()
     }
 
-    // Define the slide to be the "content area"
-    x: parent.width * 0.05
-    y: parent.height * 0.05
-    width: parent.width * 0.9
-    height: parent.height * 0.90
+    anchors {
+        left: parent.left
+        right: parent.right
+        top: parent.top
+        bottom: parent.bottom
+        topMargin: parent.height * 0.05
+        bottomMargin: parent.height * 0.05
+        leftMargin: parent.width * 0.05
+        rightMargin: parent.width * 0.05
+    }
 
     Item {
         id: contentContainer

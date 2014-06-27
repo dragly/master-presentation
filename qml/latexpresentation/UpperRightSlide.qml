@@ -4,9 +4,11 @@ Slide {
     anchors {
         top: parent.top
         right: parent.right
-        topMargin: parent.height * 0.01
-        rightMargin: parent.width * 0.01
+        left: parent.horizontalCenter
+        bottom: parent.verticalCenter
+        topMargin: parent.height * 0.03
+        bottomMargin: parent.height * 0.03
+        leftMargin: parent.width * 0.03
+        rightMargin: parent.width * 0.03
     }
-    width: parent.width * 0.48
-    height: parent.height * 0.48
 }

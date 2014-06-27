@@ -65,9 +65,8 @@ TransitionPresentation
     // --------------- Introduction ------------------
     // -----------------------------------------------
 
-    Slide {
+    MultiSlide {
         id: multiscaleSlide
-        anchors.fill: parent
         delayedContent: [
             UpperLeftSlide {
                 title: "Quantum Mechanics"
@@ -92,7 +91,7 @@ TransitionPresentation
         ]
     }
 
-    Slide {
+    MultiSlide {
         delayedContent: [
             UpperLeftSlide {
                 title: "Problem"
@@ -104,11 +103,11 @@ TransitionPresentation
             UpperRightSlide {
                 title: "Goal"
                 centeredText: "Build a bridge between the two scales.\n" +
-                              "Keep both quality and quantity."
+                              "Maximize both quality and quantity."
             },
             LowerRightSlide {
                 title: "How?"
-                centeredText: "With artificial neural networks"
+                centeredText: "Machine learning\nwith artificial neural networks."
             }
         ]
     }
@@ -124,14 +123,23 @@ TransitionPresentation
         }
     }
 
-    Slide {
+    MultiSlide {
         delayedContent: [
-            UpperLeftSlide {
-                title: "Molecular Dynamics"
-                centeredText: "Classical potentials\nand newtonian mechanics"
+            Item {
+                anchors.fill: parent
+                UpperLeftSlide {
+                    title: "Molecular Dynamics"
+                    centeredText: "Classical potentials\nand newtonian mechanics"
+                }
+                UpperRightSlide {
+                    BorderedImage {
+                        anchors.fill: parent
+                        source: "../../images/emdee-5.png"
+                    }
+                }
             },
             LowerLeftSlide {
-                centeredText: "Particles defined by position, velocity and type.\n" +
+                centeredText: "Particles defined by\nposition, velocity and type.\n" +
                               "Step-wise time-integration.\n" +
                               "Forces from potential:"
                 Latex {
@@ -144,18 +152,13 @@ TransitionPresentation
                     width: parent.width * 0.2
                     text: "$$F = -\\nabla V$$"
                 }
-            },
-            UpperRightSlide {
-                BorderedImage {
-                    anchors.fill: parent
-                    source: "../../images/emdee-5.png"
-                }
             }
         ]
     }
 
-    Slide {
+    MultiSlide {
         UpperLeftSlide {
+            id: idia
             title: "Molecular Dynamics Implementation"
             centeredText: "General code.\n" +
                           "Built-in selection of potentials.\n" +
@@ -168,8 +171,12 @@ TransitionPresentation
                 right: parent.right
                 top: parent.top
                 bottom: parent.bottom
+                left: parent.horizontalCenter
+                rightMargin: parent.width * 0.02
+                leftMargin: parent.width * 0.02
+                topMargin: parent.height * 0.02
+                bottomMargin: parent.height * 0.02
             }
-            width: parent.width * 0.45
 
             fillMode: Image.PreserveAspectFit
             source: "../../images/md-implementation-simple.png"
@@ -178,7 +185,7 @@ TransitionPresentation
         }
     }
 
-    Slide {
+    MultiSlide {
         delayedContent: [
             UpperLeftSlide {
                 title: "Classical Potentials"
@@ -196,7 +203,7 @@ TransitionPresentation
         ]
     }
 
-    Slide {
+    MultiSlide {
         delayedContent: [
             Item {
                 anchors.fill: parent
@@ -239,7 +246,7 @@ TransitionPresentation
         ]
     }
 
-    Slide {
+    MultiSlide {
         delayedContent: [
             Item {
                 anchors.fill: parent
@@ -301,7 +308,7 @@ TransitionPresentation
         ]
     }
 
-    Slide {
+    MultiSlide {
         UpperLeftSlide {
             title: "Advanced Potentials:\nReaxFF (9+ terms)"
             Latex {
@@ -320,12 +327,13 @@ TransitionPresentation
         }
     }
 
-    Slide {
+    MultiSlide {
         delayedContent: [
             UpperLeftSlide {
                 title: "Test Case: Argon Crystallization"
                 centeredText: "Boiling argon\n" +
-                              "cooled slowly."
+                              "cooled slowly.\n\n" +
+                              "Lennard-Jones potential."
             },
             LowerLeftSlide {
                 BorderedImage {
@@ -363,7 +371,7 @@ TransitionPresentation
     }
 
 
-    Slide {
+    MultiSlide {
         delayedContent: [
             UpperLeftSlide {
                 title: "Computational Quantum Mechanics\nof Atomic Systems"
@@ -399,7 +407,7 @@ TransitionPresentation
 
     // TODO Cutoff, backup slides, Hamiltonian
 
-    Slide {
+    MultiSlide {
         delayedContent: [
             Item {
                 anchors.fill: parent
@@ -454,19 +462,35 @@ TransitionPresentation
         ]
     }
 
-    Slide {
+    MultiSlide {
         UpperLeftSlide {
             title: "Hartree-Fock Method"
-            centeredText: "Self-consistent." +
-                          "Iterative scheme.\n"
+            centeredText: "Self-consistent.\n" +
+                          "Iterative scheme."
         }
+        LowerLeftSlide {
+            title: "Hartree-Fock Equations"
+            Latex {
+                text: "
+                        \\begin{align*}
+                        \\mathcal{F} \\psi_{k} &= \\epsilon_{k} \\psi_{k} \\\\
+                        \\phi_{k}(\\mathbf r) &= \\sum_{p}^{M} C_{pk} \\varphi_{p}(\\mathbf r) \\\\
+                        \\mathbf F \\mathbf C_{k} &= \\epsilon_{k} \\mathbf S \\mathbf C_{k}
+                        \\end{align*}
+                      "
+                width: parent.width * 0.4
+                anchors.bottom: parent.bottom
+            }
+        }
+
         Image {
             anchors {
                 right: parent.right
                 top: parent.top
                 bottom: parent.bottom
+                left: parent.horizontalCenter
+                margins: parent.height * 0.02
             }
-            width: parent.width * 0.45
 
             fillMode: Image.PreserveAspectFit
             source: "../../images/hf-flow.png"
@@ -475,7 +499,7 @@ TransitionPresentation
         }
     }
 
-    Slide {
+    MultiSlide {
         delayedContent: [
             UpperLeftSlide {
                 title: "Electron Density"
@@ -550,7 +574,7 @@ TransitionPresentation
         ]
     }
 
-    Slide {
+    MultiSlide {
         UpperLeftSlide {
             title: "Electrostatic Potential"
             centeredText: "Shows electro- and nucleophilic areas"
@@ -671,7 +695,7 @@ TransitionPresentation
         ]
     }
 
-    Slide {
+    MultiSlide {
         delayedContent: [
             Item {
                 anchors.fill: parent
@@ -701,7 +725,7 @@ TransitionPresentation
         ]
     }
 
-    Slide {
+    MultiSlide {
         delayedContent: [
             UpperLeftSlide {
                 title: "Approximating potentials"
@@ -736,7 +760,7 @@ TransitionPresentation
         }
     }
 
-    Slide {
+    MultiSlide {
         UpperLeftSlide {
             title: "Results of the Complete Workflow"
             centeredText: "Hydrogen molecules!"
@@ -749,7 +773,7 @@ TransitionPresentation
         }
     }
 
-    Slide {
+    MultiSlide {
         UpperLeftSlide {
             title: "Hydrogen Dissociation"
             Latex {
@@ -769,7 +793,7 @@ TransitionPresentation
             title: "(156 K)"
             BorderedImage {
                 anchors.fill: parent
-                source: "../../images/dissociation-plot-14K.png"
+                source: "../../images/dissociation-plot-156K.png"
             }
         }
         LowerRightSlide {
@@ -796,7 +820,7 @@ TransitionPresentation
         }
     }
 
-    Slide {
+    MultiSlide {
         UpperLeftSlide {
             title: "Volume Rendering of Density"
             centeredText: "Rays are traced through a cube of volume data.\n"+
@@ -810,7 +834,7 @@ TransitionPresentation
         }
     }
 
-    Slide {
+    MultiSlide {
         delayedContent: [
             UpperLeftSlide {
                 title: "Millions of Atoms"

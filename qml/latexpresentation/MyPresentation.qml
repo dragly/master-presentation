@@ -426,8 +426,7 @@ TransitionPresentation
                 }
                 LowerLeftSlide {
                     centeredText: "Nuclei are treated classically.\n" +
-                                  "Argued for by mass difference.\n" +
-                                  "Coarse, but good approximation."
+                                  "Argued for by mass difference."
                 }
             },
             Item {
@@ -645,9 +644,51 @@ TransitionPresentation
         }
     }
 
-    UpperLeftSlide {
-        title: "Path to Molecular Dynamics"
-        centeredText: "Energy to potential energy"
+    MultiSlide {
+        delayedContent: [
+            Item {
+                anchors.fill: parent
+                UpperLeftSlide {
+                    title: "Path to Molecular Dynamics"
+                    centeredText: "Electronic energy in quantum mechanics\n" +
+                                  "corresponds to potential energy\n" +
+                                  "in molecular dynamics."
+                }
+                LowerLeftSlide {
+                    Latex {
+                        width: parent.width * 0.35
+                        text: "$$V_{\\text{MD}} = E_{\\text{QM}}$$"
+                    }
+                }
+            },
+            Item {
+                anchors.fill: parent
+                UpperRightSlide {
+                    title: "Form of the Potential?"
+                }
+                LowerRightSlide {
+                    BorderedImage {
+                        anchors {
+                            left: parent.left
+                            right: parent.right
+                            top: parent.top
+                            bottom: o2Title.top
+                        }
+                        source: "../../images/neural_uhf_O2_comparison.png"
+                    }
+                    Latex {
+                        id: o2Title
+                        anchors {
+                            centerIn: undefined
+                            horizontalCenter: parent.horizontalCenter
+                            bottom: parent.bottom
+                        }
+                        width: parent.width * 0.05
+                        text: "$O_2$"
+                    }
+                }
+            }
+        ]
     }
 
     // -----------------------------------------------

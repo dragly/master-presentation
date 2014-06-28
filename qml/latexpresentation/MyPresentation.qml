@@ -139,7 +139,7 @@ TransitionPresentation
                 }
             },
             LowerLeftSlide {
-                centeredText: "Particles defined by\nposition, velocity and type.\n" +
+                centeredText: "Atoms defined by\nposition, velocity and type.\n" +
                               "Step-wise time-integration.\n" +
                               "Forces from potential:"
                 Latex {
@@ -300,8 +300,23 @@ TransitionPresentation
                 }
                 LowerRightSlide {
                     BorderedImage {
-                        anchors.fill: parent
+                        anchors {
+                            left: parent.left
+                            right: parent.right
+                            bottom: v2plusv3.top
+                            top: parent.top
+                        }
                         source: "../../images/kohen-tully-stillinger.png"
+                    }
+                    Latex {
+                        id: v2plusv3
+                        anchors {
+                            bottom: parent.bottom
+                            centerIn: undefined
+                            horizontalCenter: parent.horizontalCenter
+                        }
+                        width: parent.width * 0.1
+                        text: "$V_2 + V_3$"
                     }
                 }
             }
@@ -330,7 +345,7 @@ TransitionPresentation
     MultiSlide {
         delayedContent: [
             UpperLeftSlide {
-                title: "Test Case: Argon Crystallization"
+                title: "Demo: Argon Crystallization"
                 centeredText: "Boiling argon\n" +
                               "cooled slowly.\n\n" +
                               "Lennard-Jones potential."
@@ -357,8 +372,6 @@ TransitionPresentation
             }
         ]
     }
-
-    // TODO: Show live heating/cooling
 
     // -----------------------------------------------
     // ------- Computational Quantum Mechanics -------
@@ -454,8 +467,9 @@ TransitionPresentation
                 }
                 LowerRightSlide {
                     centeredText: "Single-particle wave functions.\n" +
-                                  "No correlations apart from exchange.\n" +
-                                  "Leads to molecular orbital theory."
+                                  "No correlations apart from exchange.\n"
+                    // +
+                    //                                  "Leads to molecular orbital theory."
                 }
             }
         ]
@@ -492,7 +506,7 @@ TransitionPresentation
             }
 
             fillMode: Image.PreserveAspectFit
-            source: "../../images/hf-flow.png"
+            source: "../../images/hf-flow-simple.png"
             antialiasing: true
             smooth: true
         }
@@ -502,7 +516,7 @@ TransitionPresentation
         delayedContent: [
             UpperLeftSlide {
                 title: "Electron Density"
-                centeredText: "Live!"
+                centeredText: "Demo!"
             },
             Item {
                 anchors.fill: parent
@@ -665,6 +679,7 @@ TransitionPresentation
                 anchors.fill: parent
                 UpperRightSlide {
                     title: "Form of the Potential?"
+                    centeredText: "Search and fitting can be laborious."
                 }
                 LowerRightSlide {
                     BorderedImage {
@@ -702,7 +717,7 @@ TransitionPresentation
         }
     }
 
-    Slide {
+    MultiSlide {
         delayedContent: [
             UpperLeftSlide {
                 title: "Neural Network"
@@ -802,16 +817,26 @@ TransitionPresentation
     }
 
     MultiSlide {
-        UpperLeftSlide {
-            title: "Results of the Complete Workflow"
-            centeredText: "Hydrogen molecules!"
-        }
-        UpperRightSlide {
-            BorderedImage {
+        delayedContent: [
+            Item {
                 anchors.fill: parent
-                source: "../../images/hydrogen-molecules-large-spheres-light-blue.png"
+
+                UpperLeftSlide {
+                    title: "Results of the Complete Workflow"
+                    centeredText: "Hydrogen molecules!"
+                }
+                LowerLeftSlide {
+                    BorderedImage {
+                        anchors.fill: parent
+                        source: "../../images/hydrogen-molecules-large-spheres-light-blue.png"
+                    }
+                }
+            },
+            UpperRightSlide {
+                title: "The price?"
+                centeredText: "10-20 times as expensive."
             }
-        }
+        ]
     }
 
     MultiSlide {
@@ -819,36 +844,43 @@ TransitionPresentation
             title: "Hydrogen Dissociation"
             Latex {
                 width: parent.width * 0.6
-                text: "Radial distribution $g(r)$."
+                text: "Radial distribution $g(r)$ at 156 K."
             }
         }
 
-        UpperRightSlide {
-            title: "(14 K)"
-            BorderedImage {
-                anchors.fill: parent
-                source: "../../images/dissociation-plot-14K.png"
-            }
-        }
         LowerLeftSlide {
-            title: "(156 K)"
+            title: "ANN"
             BorderedImage {
                 anchors.fill: parent
                 source: "../../images/dissociation-plot-156K.png"
             }
         }
+
         LowerRightSlide {
-            title: "(15990 K)"
+            title: "Kohen-Tully-Stillinger"
             BorderedImage {
                 anchors.fill: parent
-                source: "../../images/dissociation-plot-15990K.png"
+                source: "../../images/skorpa-radial.png"
             }
         }
     }
 
-    UpperLeftSlide {
-        title: "Future Possibilities"
-        centeredText: "Better quantum\nbetter neural"
+    MultiSlide {
+        UpperLeftSlide {
+            title: "Conclusion"
+            bullets: ["Potentials for MD from quantum.",
+                "Macroscopic properties from MD.",
+                "Neural networks for potential approximation.",
+                "Less person-hours, more computation time."]
+        }
+        UpperRightSlide {
+            title: "Future Possibilities"
+            bullets: ["Implementation of Kohen-Tully-Stillinger.",
+                "Test cutoff effects.",
+                "Better quantum computations.",
+                "Better neural networks.",
+                "More advanced systems."]
+        }
     }
 
     // -----------------------------------------------
@@ -876,26 +908,20 @@ TransitionPresentation
     }
 
     MultiSlide {
-        delayedContent: [
-            UpperLeftSlide {
-                title: "Millions of Atoms"
-                centeredText: "Live demo!"
-            },
-            UpperRightSlide {
-                BorderedImage {
-                    anchors.fill: parent
-                    source: "../../images/oculusqt3d-3.png"
-                }
+        UpperLeftSlide {
+            title: "Demo: Virtual Reality"
+            centeredText: "Millions of Atoms"
+        }
+        UpperRightSlide {
+            BorderedImage {
+                anchors.fill: parent
+                source: "../../images/oculusqt3d-3.png"
             }
-        ]
+        }
     }
 
     UpperLeftSlide {
-        title: "Virtual Reality"
-        centeredText: "Live demo!"
-    }
-
-    UpperLeftSlide {
+        centeredText: "Thank you for your attention!"
     }
 
 }

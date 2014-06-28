@@ -52,7 +52,7 @@ Item {
     property variant bullets: []
     property string centeredText
 
-    property real _fontSize: height * 0.09
+    property real _fontSize: height * 0.08
     property real _fontScale: 1
 
     property real _baseFontSize: _fontSize * _fontScale

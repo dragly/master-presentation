@@ -720,8 +720,10 @@ TransitionPresentation
     MultiSlide {
         delayedContent: [
             UpperLeftSlide {
-                title: "Neural Network"
-                centeredText: "Connected neurons"
+                title: "Neural Networks"
+                centeredText: "Weighted connections between neurons.\n" +
+                              "Input is summed and evaluated.\n" +
+                              "Output passed to following layers."
             },
             LowerLeftSlide {
                 Image {
@@ -752,42 +754,36 @@ TransitionPresentation
     }
 
     MultiSlide {
-        delayedContent: [
-            Item {
+        UpperLeftSlide {
+            title: "Training With Backpropagation"
+            bullets: [
+                "Load training data.",
+                "Run network.",
+                "Compare retrieved and desired output.",
+                "Propagate error and derivative backwards.",
+                "Adjust weights."
+            ]
+        }
+        LowerLeftSlide {
+            Image {
                 anchors.fill: parent
-                UpperLeftSlide {
-                    title: "Training"
-                    centeredText: "Backpropagation"
-                }
-                LowerLeftSlide {
-                    Image {
-                        anchors.fill: parent
-                        source: "../../images/network.png"
-                        fillMode: Image.PreserveAspectFit
-                        antialiasing: true
-                        smooth: true
-                    }
-                }
-            },
-            UpperRightSlide {
-                Image {
-                    anchors.fill: parent
-                    source: "../../images/split-neuron.png"
-                    fillMode: Image.PreserveAspectFit
-                    antialiasing: true
-                    smooth: true
-                }
+                source: "../../images/network.png"
+                fillMode: Image.PreserveAspectFit
+                antialiasing: true
+                smooth: true
             }
-        ]
+        }
     }
 
     MultiSlide {
         delayedContent: [
             UpperLeftSlide {
-                title: "Approximating potentials"
-                centeredText: "Calculate energy for configurations.\n" +
-                              "Train network.\n" +
-                              "Plot result."
+                title: "Approximating Potentials"
+                bullets: [
+                    "Calculate energy for configurations.",
+                    "Train network with Fast Artificial Neural Network Library (FANN).",
+                    "Plot result."
+                ]
             },
             UpperRightSlide {
                 BorderedImage {
@@ -833,8 +829,8 @@ TransitionPresentation
                 }
             },
             UpperRightSlide {
-                title: "The price?"
-                centeredText: "10-20 times as expensive."
+                title: "Performance"
+                centeredText: "10 - 20 times as expensive."
             }
         ]
     }
@@ -868,18 +864,21 @@ TransitionPresentation
     MultiSlide {
         UpperLeftSlide {
             title: "Conclusion"
-            bullets: ["Potentials for MD from quantum.",
+            bullets: [
+                "Potentials for MD from quantum.",
                 "Macroscopic properties from MD.",
                 "Neural networks for potential approximation.",
-                "Less person-hours, more computation time."]
+                "Less person-hours, more computation time."
+            ]
         }
         UpperRightSlide {
             title: "Future Possibilities"
-            bullets: ["Implementation of Kohen-Tully-Stillinger.",
+            bullets: [
                 "Test cutoff effects.",
                 "Better quantum computations.",
                 "Better neural networks.",
-                "More advanced systems."]
+                "More advanced systems."
+            ]
         }
     }
 

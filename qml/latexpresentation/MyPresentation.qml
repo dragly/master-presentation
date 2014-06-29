@@ -348,28 +348,29 @@ TransitionPresentation
                 title: "Demo: Argon Crystallization"
                 centeredText: "Boiling argon\n" +
                               "cooled slowly.\n\n" +
-                              "Lennard-Jones potential."
+                              "Lennard-Jones potential.\n" +
+                              "Phase change at 90K (experimental: 84 K)."
             },
             LowerLeftSlide {
                 BorderedImage {
                     anchors.fill: parent
                     source: "../../images/argon-crystallization-focus-blur.png"
                 }
-            },
-            Item {
-                anchors.fill: parent
-                LowerRightSlide {
-                    BorderedImage {
-                        anchors.fill: parent
-                        source: "../../images/argon-crystallization-energy-pressure.png"
-                    }
-                }
-                UpperRightSlide {
-                    centeredText: "Phase change at about 90K.\n" +
-                                  "True boiling point: 87K.\n" +
-                                  "True melting point: 84K."
-                }
             }
+//            Item {
+//                anchors.fill: parent
+//                LowerRightSlide {
+//                    BorderedImage {
+//                        anchors.fill: parent
+//                        source: "../../images/argon-crystallization-energy-pressure.png"
+//                    }
+//                }
+//                UpperRightSlide {
+//                    centeredText: "Phase change at about 90K.\n" +
+//                                  "True boiling point: 87K.\n" +
+//                                  "True melting point: 84K."
+//                }
+//            }
         ]
     }
 
@@ -838,14 +839,11 @@ TransitionPresentation
     MultiSlide {
         UpperLeftSlide {
             title: "Hydrogen Dissociation"
-            Latex {
-                width: parent.width * 0.6
-                text: "Radial distribution $g(r)$ at 156 K."
-            }
+            centeredText: "Good correspondence with study by Skorpa et. al."
         }
 
         LowerLeftSlide {
-            title: "ANN"
+            title: "g(r) for ANN at 156 K"
             BorderedImage {
                 anchors.fill: parent
                 source: "../../images/dissociation-plot-156K.png"
@@ -853,7 +851,7 @@ TransitionPresentation
         }
 
         LowerRightSlide {
-            title: "Kohen-Tully-Stillinger"
+            title: "g(r) for Kohen-Tully-Stillinger at 156 K"
             BorderedImage {
                 anchors.fill: parent
                 source: "../../images/skorpa-radial.png"

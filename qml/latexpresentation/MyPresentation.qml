@@ -409,7 +409,7 @@ TransitionPresentation
                           \\frac{1}{2} \\nabla_{r_i}^2 - \\sum_{n}^{N_n} \\frac{1}{2m_p} \\nabla_{R_i}^2 +
                           \\sum_{n<m}^{N_n}
                           \\frac{Z_n Z_m}{|\\mathbf R_n - \\mathbf R_m|} \\\\
-                          &- \\frac{1}{2} \\sum_{i}^{N} \\sum_{n}^{N_n} \\frac{Z_n}{|\\mathbf r_i -
+                          &- \\sum_{i}^{N} \\sum_{n}^{N_n} \\frac{Z_n}{|\\mathbf r_i -
                           \\mathbf
                           R_n|}
                           + \\sum_{i<j}^{N} \\frac{1}{|\\mathbf r_i - \\mathbf r_j|}

@@ -439,7 +439,7 @@ TransitionPresentation
                     }
                 }
                 LowerLeftSlide {
-                    centeredText: "Nuclei are treated classically.\n" +
+                    centeredText: "Nuclei configuration is fixed.\n" +
                                   "Argued for by mass difference."
                 }
             },
@@ -788,14 +788,44 @@ TransitionPresentation
             },
             UpperRightSlide {
                 BorderedImage {
-                    anchors.fill: parent
+                    anchors {
+                        left: parent.left
+                        right: parent.right
+                        bottom: h2title212.top
+                        top: parent.top
+                    }
                     source: "../../images/neural-approximation-h2.png"
+                }
+                Latex {
+                    id: h2title212
+                    anchors {
+                        bottom: parent.bottom
+                        centerIn: undefined
+                        horizontalCenter: parent.horizontalCenter
+                    }
+                    width: parent.width * 0.03
+                    text: "H$_2$"
                 }
             },
             LowerRightSlide {
                 BorderedImage {
-                    anchors.fill: parent
+                    anchors {
+                        left: parent.left
+                        right: parent.right
+                        bottom: h3title212.top
+                        top: parent.top
+                    }
                     source: "../../images/neural-approximation-h3.png"
+                }
+                Latex {
+                    id: h3title212
+                    anchors {
+                        bottom: parent.bottom
+                        centerIn: undefined
+                        horizontalCenter: parent.horizontalCenter
+                    }
+                    width: parent.width * 0.03
+                    text: "H$_3$"
                 }
             }
         ]
@@ -839,7 +869,7 @@ TransitionPresentation
     MultiSlide {
         UpperLeftSlide {
             title: "Hydrogen Dissociation"
-            centeredText: "Good correspondence with study by Skorpa et. al."
+            centeredText: "Good correspondence\nwith study by Skorpa et. al."
         }
 
         LowerLeftSlide {
